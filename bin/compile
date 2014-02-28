@@ -189,6 +189,8 @@ fi
 
 # install dependencies with npm
 echo "-----> Installing dependencies with npm"
+
+run_npm 'config set ca ""'
 run_npm "install"
 run_npm "rebuild"
 echo "Dependencies installed" | indent
