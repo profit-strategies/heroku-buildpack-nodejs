@@ -71,3 +71,8 @@ Open `bin/compile` in your editor, and change the following lines:
 Commit and push the changes to your buildpack to your Github fork, then push your sample app to Heroku to test.  You should see:
 
     -----> Vendoring node 0.6.7
+
+s3 deployment
+
+    from project folder zip contents and exclude repo
+    tar --exclude=.git -czpf ./heroku-buildpack-nodejs.tar.gz ./
