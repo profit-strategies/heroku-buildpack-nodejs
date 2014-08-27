@@ -132,8 +132,8 @@ status "Building runtime environment"
 mkdir -p $build_dir/.profile.d
 echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\";" > $build_dir/.profile.d/nodejs.sh
 
-echo "running node compile with: $HOME/vendor/node/bin/node compile"
-$HOME/vendor/node/bin/node compile 2>&1 | indent
+echo "running node compile"
+node compile 2>&1 | indent
 
 if [ "${PIPESTATUS[*]}" != "0 0" ]; then
     echo " !     Failed when running: node compile"
