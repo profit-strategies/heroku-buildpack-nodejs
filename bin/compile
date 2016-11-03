@@ -137,13 +137,20 @@ status "Building runtime environment"
 mkdir -p $build_dir/.profile.d
 echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\";" > $build_dir/.profile.d/nodejs.sh
 
-echo "running node compile"
-node compile 2>&1 | indent
+(
+  # Expose NODE_ENV so `envify` can pick it up while compiling the app code
+  if [ -d "$env_dir" ]; then
+    export NODE_ENV=$(cat $env_dir/NODE_ENV)
+  fi
+  status "Running node compile"
+  node compile 2>&1 | indent
 
-if [ "${PIPESTATUS[*]}" != "0 0" ]; then
-    echo " !     Failed when running: node compile"
-    exit 1
-fi
+  if [ "${PIPESTATUS[*]}" != "0 0" ]; then
+      echo " !     Failed when running: node compile"
+      exit 1
+  fi
+)
+
 
 # Post package.json to nomnom service
 # Use a subshell so failures won't break the build.
